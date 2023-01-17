@@ -32,7 +32,8 @@ service Blog {
 message CreateRequest {
     uint64 blogId = 1;
     uint64 userId = 2;
-    string text = 3;
+    string title = 3;
+    string text = 4;
 }
 
 message Confirm {
@@ -48,8 +49,9 @@ message IdRequest {
 message Content {
     uint64 postId = 1;
     uint64 userId = 2;
-    string text = 3;
-    int64 createdAt = 4;
+    string title = 3;
+    string text = 4;
+    int64 createdAt = 5;
 }
 
 message SearchRequest {
