@@ -22,10 +22,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BlogClient interface {
-	CreatePost(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*Confirm, error)
+	CreatePost(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*Response, error)
 	GetPost(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Content, error)
 	GetPosts(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Contents, error)
-	DeletePost(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Confirm, error)
+	DeletePost(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Response, error)
 }
 
 type blogClient struct {
@@ -36,8 +36,8 @@ func NewBlogClient(cc grpc.ClientConnInterface) BlogClient {
 	return &blogClient{cc}
 }
 
-func (c *blogClient) CreatePost(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*Confirm, error) {
-	out := new(Confirm)
+func (c *blogClient) CreatePost(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
 	err := c.cc.Invoke(ctx, "/puzzleblogservice.Blog/CreatePost", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -63,8 +63,8 @@ func (c *blogClient) GetPosts(ctx context.Context, in *SearchRequest, opts ...gr
 	return out, nil
 }
 
-func (c *blogClient) DeletePost(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Confirm, error) {
-	out := new(Confirm)
+func (c *blogClient) DeletePost(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
 	err := c.cc.Invoke(ctx, "/puzzleblogservice.Blog/DeletePost", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,10 +76,10 @@ func (c *blogClient) DeletePost(ctx context.Context, in *IdRequest, opts ...grpc
 // All implementations must embed UnimplementedBlogServer
 // for forward compatibility
 type BlogServer interface {
-	CreatePost(context.Context, *CreateRequest) (*Confirm, error)
+	CreatePost(context.Context, *CreateRequest) (*Response, error)
 	GetPost(context.Context, *IdRequest) (*Content, error)
 	GetPosts(context.Context, *SearchRequest) (*Contents, error)
-	DeletePost(context.Context, *IdRequest) (*Confirm, error)
+	DeletePost(context.Context, *IdRequest) (*Response, error)
 	mustEmbedUnimplementedBlogServer()
 }
 
@@ -87,7 +87,7 @@ type BlogServer interface {
 type UnimplementedBlogServer struct {
 }
 
-func (UnimplementedBlogServer) CreatePost(context.Context, *CreateRequest) (*Confirm, error) {
+func (UnimplementedBlogServer) CreatePost(context.Context, *CreateRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePost not implemented")
 }
 func (UnimplementedBlogServer) GetPost(context.Context, *IdRequest) (*Content, error) {
@@ -96,7 +96,7 @@ func (UnimplementedBlogServer) GetPost(context.Context, *IdRequest) (*Content, e
 func (UnimplementedBlogServer) GetPosts(context.Context, *SearchRequest) (*Contents, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPosts not implemented")
 }
-func (UnimplementedBlogServer) DeletePost(context.Context, *IdRequest) (*Confirm, error) {
+func (UnimplementedBlogServer) DeletePost(context.Context, *IdRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePost not implemented")
 }
 func (UnimplementedBlogServer) mustEmbedUnimplementedBlogServer() {}

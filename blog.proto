@@ -23,10 +23,10 @@ package puzzleblogservice;
 
 // The blog service definition.
 service Blog {
-    rpc CreatePost(CreateRequest) returns (Confirm);
+    rpc CreatePost(CreateRequest) returns (Response);
     rpc GetPost(IdRequest) returns (Content);
     rpc GetPosts(SearchRequest) returns (Contents);
-    rpc DeletePost(IdRequest) returns (Confirm);
+    rpc DeletePost(IdRequest) returns (Response);
 }
 
 message CreateRequest {
@@ -36,7 +36,7 @@ message CreateRequest {
     string text = 4;
 }
 
-message Confirm {
+message Response {
     bool success = 1;
     uint64 id = 2;
 }
