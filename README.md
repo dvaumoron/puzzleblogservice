@@ -1,2 +1,3 @@
 # puzzleblogservice
-service description to store blog post
+
+[gRPC](https://grpc.io/) service description to store blog post.
